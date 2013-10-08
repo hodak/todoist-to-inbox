@@ -7,4 +7,4 @@ How to use
 ----------
 Edit first two variables in *index.php* file and upload files to whatever-fits-you-best directory on Your web server.
 
-You will need Todoist API Key: <https://todoist.com/Users/viewPrefs?page=account>
+You will need Todoist API Token: <https://todoist.com/Users/viewPrefs?page=account>
