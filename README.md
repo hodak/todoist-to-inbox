@@ -9,4 +9,4 @@ Edit first two variables in *index.php* file and upload files to whatever-fits-y
 
 You will need Todoist API Token: <https://todoist.com/Users/viewPrefs?page=account>
 
-Leave me a note: <http://hodak.pl/inbox/>
+Leave me a note to my inbox: <http://hodak.pl/inbox/> ;)
