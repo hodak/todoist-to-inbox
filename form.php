@@ -17,7 +17,7 @@
 				<?php if( !empty( $inbox_password ) ) : ?>
 				<input type="password" name="inbox_password" value="" placeholder="Inbox password" />
 				<?php endif; ?>
-				<input type="submit" name="send_inbox_item" value="Send to my Todoist" class="button" />
+				<input type="submit" name="send_inbox_item" value="Send to my Todoist" class="button" id="submit-button" />
 			</form><!-- #todoist-form -->
 			<div class="footer">Developed by <a href="http://hodak.pl/">hodak.pl</a></div>
 		</div><!-- .wrapper -->

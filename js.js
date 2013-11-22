@@ -45,31 +45,53 @@ ajax.post = function(url, data, callback, sync) {
 
 // Hook into submitting form
 var form = document.getElementById( 'todoist-form' );
+var button = document.getElementById( 'submit-button' );
+var button_original_text = button.value;
+var disable_form = false;
+
 if (form.attachEvent) {
 	form.attachEvent( "submit", processForm );
 } else {
 	form.addEventListener( "submit", processForm );
 }
-function processForm( e ) {
-	e.preventDefault();
-	var todoist_content = form.inbox_item.value;
-	var todoist_password = '';
-	if( form.inbox_password )
-		todoist_password = form.inbox_password.value;
 
-	ajax.post( 'index.php', {
-		inbox_item: todoist_content,
-		inbox_password: todoist_password,
-		send_inbox_item: ''
-	}, function() {
-		var responseDiv = document.getElementById( 'response' );
-		responseDiv.innerHTML = x.response;
-		responseDiv.className += " with-response";
-		if( x.response.toLowerCase().indexOf( 'success' ) >= 0 ) {
-			responseDiv.className += " success-response";
-		} else {
-			responseDiv.className = responseDiv.className.replace( ' success-response', '' );
-		}
+function processForm( e ) {
+	button.value = 'Sending...';
+
+	e.preventDefault();
+	if( disable_form ) {
+		return false;
+	}
+	disable_form = true;
+
+	// we need to timeout it a bit because button.value wasn't refreshing
+	// i'm too lame in javascript to know why
+	window.setTimeout( function() {
+		var todoist_content = form.inbox_item.value;
+		var todoist_password = '';
+		if( form.inbox_password )	todoist_password = form.inbox_password.value;
+
+		ajax.post( 'index.php', {
+			inbox_item: todoist_content,
+			inbox_password: todoist_password,
+			send_inbox_item: ''
+		}, function() {
+			var responseDiv = document.getElementById( 'response' );
+			responseDiv.innerHTML = x.response;
+			responseDiv.className += " with-response";
+			if( x.response.toLowerCase().indexOf( 'success' ) >= 0 ) {
+				responseDiv.className += " success-response";
+			} else {
+				responseDiv.className = responseDiv.className.replace( ' success-response', '' );
+			}
+			form.inbox_item.value = '';
+			disable_form = false;
+			button.value = button_original_text;
+			window.setInterval( function() {
+				responseDiv.innerHTML = '';
+				responseDiv.className = responseDiv.className.replace( 'with-response', '' );
+			}, 3000 );
+		}, 20 );
 	} );
 }
 
